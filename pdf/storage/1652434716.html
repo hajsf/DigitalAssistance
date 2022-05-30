@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+<style>
+.box {
+	border: 1px solid #CCC;
+	padding: 40px 25px;
+	background: #FFF;
+	max-width: 400px;
+	position: relative;
+	border-radius: 3px;
+  margin: 0 auto;
+}
+.box.ofh {
+  overflow: hidden;
+}
+
+
+ 
+.half-circle-ribbon {
+  background: #EA4335;
+  color: #FFF;
+  height: 60px;
+  width: 100px;
+  text-align: right;
+  padding-top: 10px;
+  padding-right: 10px;
+  position: absolute;
+  top: -1px;
+  right: -1px;
+  flex-direction: row;
+  border-radius: 0 0 0 100%;
+  border: 1px dashed #FFF;
+  box-shadow: 0 0 0 3px #EA4335;
+}
+
+.price {
+    width: 58%;
+    height: 100%;
+
+    color: #eef122;
+    font-size: 2em;
+    font-weight: 900;
+    text-align: right;
+}
+
+.price .cents {
+    margin-left: -.5em;
+    position: relative;
+    top: -.625em;
+    font-size: .5em;
+}
+
+.container {
+	  display: grid;
+	  grid-template-columns: 100px 150px 200px;
+	  text-align: center;
+	  
+	  
+	}
+	.column {
+	  padding: 16px;
+	  height: 250px;
+	  margin: 5px;
+	  background-color: #cccccc;
+	}
+
+</style>
+</head>
+<body>
+  
+  <div class="box ofh">
+    <div class="half-circle-ribbon"><span class="price">350.<span class="cents">99</span></span></div>
+    <div class="container">
+	   <div class="column">
+	     <h2> First column </h2>
+		 <p> This is first column of our grid system</p>
+	   </div>
+	   <div class="column">
+	     <h2> second column </h2>
+		 <p> This is second column of our grid system</p>
+	   </div>
+	   <div class="column">
+	     <h2> Third column </h2>
+		 <p> This is third column of our grid system</p>
+	   </div>
+  </div>
+
+
+  
+</body>
+</html>

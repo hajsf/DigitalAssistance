@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+<style>
+.box {
+	border: 1px solid #CCC;
+	padding: 40px 25px;
+	background: #FFF;
+	max-width: 400px;
+	position: relative;
+	border-radius: 3px;
+  margin: 0 auto;
+}
+.box.ofh {
+  overflow: hidden;
+}
+
+
+ 
+.half-circle-ribbon {
+  background: #EA4335;
+  color: #FFF;
+  height: 60px;
+  width: 100px;
+  text-align: right;
+  padding-top: 10px;
+  padding-right: 10px;
+  position: absolute;
+  top: -1px;
+  right: -1px;
+  flex-direction: row;
+  border-radius: 0 0 0 100%;
+  border: 1px dashed #FFF;
+  box-shadow: 0 0 0 3px #EA4335;
+}
+
+.price {
+    width: 58%;
+    height: 100%;
+
+    color: #eef122;
+    font-size: 2em;
+    font-weight: 900;
+    text-align: right;
+}
+
+.price .cents {
+    margin-left: -.5em;
+    position: relative;
+    top: -.625em;
+    font-size: .5em;
+}
+</style>
+</head>
+<body>
+  
+  <div class="box ofh">
+    <div class="half-circle-ribbon"><span class="price">350.<span class="cents">99</span></span><br /> شامل الضريبة</div>
+    Lorem ipsum dolor sit amet, adipisicing elit. Repellendus natus, est rem asperiores, omnis quo, temporibus deserunt tempora obcaecati odio dolorem quaerat nesciunt assumenda maxime voluptate in. Velit, dignissimos, ut.
+  </div>
+
+
+  
+</body>
+</html>

@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+<style>
+
+@import url('https://fonts.googleapis.com/css?family=Lato:400,900');
+
+* {
+  font-family: 'Lato', sans-serif;
+  box-sizing: border-box;
+}
+
+.product-price {
+    margin: 0;
+    height: 3em;
+    min-width: 5em;
+    display: inline-block;
+    color: #fff;
+    background: #E5D8C3;
+    background-clip: padding-box;
+    border-radius: .5em;
+    line-height: 1;
+}
+
+.product-price .list-price,
+.product-price .price {
+    height: 100%;
+    padding: .5em;
+    display: inline-block;
+    vertical-align: top;
+}
+
+.product-price .list-price {
+    margin-right: -.1em;
+    max-width: 40%;
+    background: #F15F22;
+    border-top-left-radius: .5em;
+    border-bottom-left-radius: .5em;
+}
+
+.product-price s {
+   padding: 0 1em 0 0;
+   display: block;
+}
+
+.csstransforms .product-price s {
+    position: relative;
+    text-decoration: none;
+}
+.csstransforms .product-price s::before {
+    position: absolute;
+    border-top: .1em solid;
+    top: 50%;
+    width: 100%;
+    content: '';
+    transform: rotate(-20deg);
+}
+
+.product-price .price {
+    width: 58%;
+    height: 100%;
+    padding: .25em;
+    color: #F15F22;
+    background: #E5D8C3;
+    background-clip: padding-box;
+    border-top-right-radius: .5em;
+    border-bottom-right-radius: .5em;
+    font-size: 2em;
+    font-weight: 900;
+    text-align: right;
+}
+
+.product-price .price .cents {
+    margin-left: -.5em;
+    position: relative;
+    top: -.625em;
+    font-size: .5em;
+}
+
+    body {
+  max-width: 1000px;
+  padding: 50px;
+  margin: auto;
+  font-family: helvetica, arial;
+  background-color: white;
+}
+
+h1 {
+  margin: 80px 0px 40px 0px;
+  color: blue;
+  text-align: center;
+  font-size: 28px;
+  font-weight: 200;
+}
+
+.product {
+  background-color: white;
+  width: 300px;
+  display: block;
+  padding: 36px 6px 36px 6px; 
+  height: auto;
+  position: relative;
+  float: left;
+  margin-right: 20px;
+  margin-bottom: 20px;
+  box-shadow: 1px 1px 5px 1px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.product:hover {
+  box-shadow: 2px 2px 5px 2px rgba(0, 0, 0, 0.1);
+  transform: scale(1.02);
+}
+
+.product:hover .product-image {
+  transition:0.2s;
+  background: blue;
+}
+
+.product-image {
+  transition:0.5s;
+  background: whitesmoke;
+  height: 300px;
+}
+
+.product p {
+  text-align: left;
+  padding-left: 20px;
+  font-size: 18px;
+  color: blue;
+}
+
+.price {
+  color: rgba(0, 0, 0, 0.6);
+  background-color: #ffe68b;
+  display: block;
+  width: 200px;
+  padding: 10px 5px 10px 0px;
+  position: absolute;
+  right: 50px;
+  top: 5px;
+  text-align: center;
+  font-family: courier;
+  border-radius: 2px;
+  filter: drop-shadow(1px 1px 0.8px rgba(0, 0, 0, 0.2));
+  transform: rotateZ(-90deg) scale(1);
+  transition: all 0.5s ease;
+}
+
+.price::before {
+  content: "";
+  padding: 18px;
+  position: absolute;
+  background-color: #ffe68b;
+  left: -6px;
+  top: 1px;
+  border-bottom-left-radius: 50%;
+  border-top-left-radius: 50%;
+  z-index: -1;
+}
+
+.price::after {
+  content: "";
+  padding: 18px;
+  position: absolute;
+  background-color: #ffe68b;
+  right: -6px;
+  top: 1px;
+  border-bottom-right-radius: 50%;
+  border-top-right-radius: 50%;
+  z-index: -1;
+}
+
+.cost {
+  color: rgba(0, 0, 0, 0.6);
+  background-color: #ffe68b;
+  display: block;
+  width: 200px;
+  padding: 10px 5px 10px 0px;
+  position: absolute;
+  right: 50px;
+  bottom: 15px;
+  text-align: right;
+  font-family: courier;
+  border-radius: 2px;
+  filter: drop-shadow(1px 1px 0.8px rgba(0, 0, 0, 0.2));
+  transform: rotateZ(-5deg) scale(1);
+  transition: all 0.5s ease;
+}
+
+.cost::before {
+  content: "";
+  padding: 18px;
+  position: absolute;
+  background-color: #ffe68b;
+  left: -6px;
+  top: 1px;
+  border-bottom-left-radius: 50%;
+  border-top-left-radius: 50%;
+  z-index: -1;
+}
+
+.cost::after {
+  content: "";
+  padding: 18px;
+  position: absolute;
+  background-color: #ffe68b;
+  right: -6px;
+  top: 1px;
+  border-bottom-right-radius: 50%;
+  border-top-right-radius: 50%;
+  z-index: -1;
+}
+</style>
+</head>
+<body>
+
+<h1>This is a heading</h1>
+<p class="product-price">
+    <span class="list-price">van <s>14.99</s></span>
+    <span class="price">9.<span class="cents">99</span>
+  </p>
+<p>This is a paragraph.</p>
+
+مرحبا
+
+<div class="product">
+    <span class="price"> شامل الضريبة  459،00</span>
+    <div class="product-image"></div> 
+    <span class="cost">التكلفة 300،00 </span>
+  </div>
+
+</body>
+</html>
