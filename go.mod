@@ -3,14 +3,13 @@ module DigitalAssistance
 go 1.18
 
 require (
+	github.com/abadojack/whatlanggo v1.0.1
 	github.com/mattn/go-sqlite3 v1.14.12
 	github.com/mdp/qrterminal/v3 v3.0.0
 	go.mau.fi/whatsmeow v0.0.0-20220503123407-9c7bffd59416
 	google.golang.org/protobuf v1.28.0
 	gopkg.in/mail.v2 v2.3.1
 )
-
-require gocv.io/x/gocv v0.30.0 // indirect
 
 require (
 	filippo.io/edwards25519 v1.0.0-rc.1 // indirect

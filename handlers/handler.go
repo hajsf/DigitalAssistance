@@ -9,6 +9,7 @@ import (
 	"regexp"
 	"strconv"
 
+	"github.com/abadojack/whatlanggo"
 	"go.mau.fi/whatsmeow/types/events"
 )
 
@@ -32,8 +33,24 @@ func Handler(rawEvt interface{}) {
 		//	note3 := evt.Message.GetExtendedTextMessage()
 		//	fmt.Println("hi 3", note3)
 		case evt.Message.Conversation != nil:
+			var msgReceived string
 			received := evt.Message.GetConversation()
-			matches := re.FindStringSubmatch(received)
+			// convert numbers in Arabic scrtip to numbers in latin script
+			for _, e := range received {
+				if e >= 48 && e <= 57 {
+					//	fmt.Println("Number in english script number")
+					msgReceived = fmt.Sprintf("%s%v", msgReceived, string(e))
+				} else if e >= 1632 && e <= 1641 {
+					//	fmt.Println("It is Arabic script")
+					msgReceived = fmt.Sprintf("%s%v", msgReceived, global.NormalizeNumber(e))
+				} else {
+					//	fmt.Println("Dose not looks to be a number")
+					msgReceived = fmt.Sprintf("%s%v", msgReceived, string(e))
+				}
+			}
+
+			matches := re.FindStringSubmatch(msgReceived)
+
 			//	if sender == "966138117381" {
 			//		check.SendDisposable(sender)
 			//	}
@@ -43,8 +60,18 @@ func Handler(rawEvt interface{}) {
 			} else if !evt.Info.IsGroup && !evt.Info.IsFromMe && (sender != "966556888145" && // && !evt.Info.IsFromMe
 				sender != "966505148268" && sender != "966531041222" && sender != "966577942979" &&
 				sender != "966506888972" && sender != "966557776097" && sender != "966505360700" && sender != "966555786616" &&
-				sender != "966508884337") {
-				go WelcomeMessage(sender, pushName)
+				sender != "966508884337" && sender != "966508899479" && sender != "966530052201" && sender != "966558936645" &&
+				sender != "966502887935" && sender != "971563451686") {
+
+				info := whatlanggo.Detect(evt.Message.GetConversation())
+				fmt.Println("Language:", info.Lang.String(), " Script:", whatlanggo.Scripts[info.Script], " Confidence: ", info.Confidence)
+				switch whatlanggo.Scripts[info.Script] {
+				case "Arabic":
+					go WelcomeMessage(sender, pushName)
+				case "Latin":
+					go WelcomeMessageLatin(sender, pushName)
+				}
+				//	go WelcomeMessage(sender, pushName)
 			}
 
 		case evt.Message.ImageMessage != nil,

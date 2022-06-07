@@ -10,7 +10,7 @@ import (
 )
 
 func GetCard(barcode string) (target global.SKUcard[float64], ipartString, decpartString string) {
-	webApp := "AKfycbyAxwwbM9xsdOHyMwBc0_seabA0lYtXkSZa-R9wVbBm_fjWH26tLWsyFGEagV_31-xm"
+	webApp := "AKfycbwuLGLnjj9DuiNHYlI9xdojPzOSbswTt8iK1WkZnlM11bagKVzLrcrcp0B-Bm8D57KN"
 	// webApp := "AKfycbxfc7e9V9rbDpX8eeoqlsNOunjs4VM496ibPEmdwhaTdJhmHmThI-Hj7_RxrUgpwLz0"
 	req, _ := http.NewRequest("GET", "https://script.google.com/macros/s/"+webApp+"/exec?", nil)
 
@@ -18,7 +18,7 @@ func GetCard(barcode string) (target global.SKUcard[float64], ipartString, decpa
 	q.Add("barcode", barcode)
 
 	req.URL.RawQuery = q.Encode()
-	//	fmt.Println(req.URL.String())
+	fmt.Println(req.URL.String())
 	// resp, err := http.Get(req.URL.String())
 	resp, err := http.DefaultClient.Do(req)
 	_ = req.URL.RawQuery
