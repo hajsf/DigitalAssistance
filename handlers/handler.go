@@ -18,6 +18,20 @@ import (
 )
 
 func Handler(rawEvt interface{}) {
+	/* Set language translation */
+
+	// Create a new i18n bundle with default language.
+	bundle := i18n.NewBundle(language.English)
+
+	// Register a toml unmarshal function for i18n bundle.
+	bundle.RegisterUnmarshalFunc("toml", toml.Unmarshal)
+
+	// Load translations from toml files for non-default languages.
+	bundle.MustLoadMessageFile("./lang/active.ar.toml")
+	bundle.MustLoadMessageFile("./lang/active.es.toml")
+
+	var lang string
+
 	switch evt := rawEvt.(type) {
 	case *events.Message:
 		sender := evt.Info.Chat.User
@@ -69,19 +83,7 @@ func Handler(rawEvt interface{}) {
 
 				info := whatlanggo.Detect(evt.Message.GetConversation())
 				fmt.Println("Language:", info.Lang.String(), " Script:", whatlanggo.Scripts[info.Script], " Confidence: ", info.Confidence)
-				/* Set language translation */
 
-				// Create a new i18n bundle with default language.
-				bundle := i18n.NewBundle(language.English)
-
-				// Register a toml unmarshal function for i18n bundle.
-				bundle.RegisterUnmarshalFunc("toml", toml.Unmarshal)
-
-				// Load translations from toml files for non-default languages.
-				bundle.MustLoadMessageFile("./lang/active.ar.toml")
-				bundle.MustLoadMessageFile("./lang/active.es.toml")
-
-				var lang string
 				switch whatlanggo.Scripts[info.Script] {
 				case "Arabic":
 					go WelcomeMessage(sender, pushName)
