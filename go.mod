@@ -12,6 +12,13 @@ require (
 )
 
 require (
+	github.com/BurntSushi/toml v1.1.0 // indirect
+	github.com/nicksnyder/go-i18n/v2 v2.2.0 // indirect
+	golang.org/x/text v0.3.7 // indirect
+	gopkg.in/yaml.v2 v2.4.0 // indirect
+)
+
+require (
 	filippo.io/edwards25519 v1.0.0-rc.1 // indirect
 	github.com/SebastiaanKlippert/go-wkhtmltopdf v1.7.2
 	github.com/gorilla/websocket v1.5.0 // indirect

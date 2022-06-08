@@ -14,29 +14,37 @@ func ButtonResponses(id int, sender string) {
 	case Enum.Vendor:
 		go vendor.WhichVender(sender)
 	case Enum.ExistingVendor:
-		global.Users = append(global.Users, map[string]int{
-			sender: Enum.ExistingVendor,
+		global.Users = append(global.Users, global.Communicator{
+			Sender:     sender,
+			UserType:   Enum.ExistingVendor,
+			UserScript: "Arabic",
 		})
 		go vendor.CurrentVender(sender)
 	//	franchisee.ContactSuperIntendent(sender)
 	//	franchisee.SendContact(sender)
 	//	Bye(sender)
 	case Enum.NewVendor:
-		global.Users = append(global.Users, map[string]int{
-			sender: Enum.NewVendor,
+		global.Users = append(global.Users, global.Communicator{
+			Sender:     sender,
+			UserType:   Enum.NewVendor,
+			UserScript: "Arabic",
 		})
 		go vendor.NewVender(sender)
 	case Enum.Supervisor:
-		global.Users = append(global.Users, map[string]int{
-			sender: Enum.Supervisor,
+		global.Users = append(global.Users, global.Communicator{
+			Sender:     sender,
+			UserType:   Enum.Supervisor,
+			UserScript: "Arabic",
 		})
 		branches.BranchIssue(sender)
 		//	franchisee.ContactSuperIntendent(sender)
 		//	franchisee.SendContact(sender)
 		Bye(sender)
 	case Enum.Franchisee:
-		global.Users = append(global.Users, map[string]int{
-			sender: Enum.Franchisee,
+		global.Users = append(global.Users, global.Communicator{
+			Sender:     sender,
+			UserType:   Enum.Franchisee,
+			UserScript: "Arabic",
 		})
 		franchisee.ContactSuperIntendent(sender)
 		franchisee.SendContact(sender)
@@ -44,13 +52,17 @@ func ButtonResponses(id int, sender string) {
 	case Enum.Yes: // yes another service is required
 		var userType int
 		for _, v := range global.Users {
+			if v.Sender == sender {
+				userType = v.UserType
+				break
+			}
 			//fmt.Println(k, "is:", v[sender])
-			for key, value := range v {
+			/*	for key, value := range v.UserType {
 				if key == sender {
-					userType = value
+					userType = v.UserType
 					break
 				}
-			}
+			} */
 		}
 
 		switch userType {

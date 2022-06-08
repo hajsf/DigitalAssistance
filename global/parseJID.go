@@ -14,9 +14,15 @@ import (
 	waLog "go.mau.fi/whatsmeow/util/log"
 )
 
+type Communicator struct {
+	Sender     string
+	UserType   int
+	UserScript string
+}
+
 var Cli *whatsmeow.Client
 var Log waLog.Logger
-var Users []map[string]int
+var Users []Communicator
 var DbMessages = flag.String("db-locations", "file:locations.db?loc=auto", "Database address")
 var Db *sql.DB
 
