@@ -9,28 +9,11 @@ import (
 	"regexp"
 	"strconv"
 
-	"github.com/BurntSushi/toml"
 	"github.com/abadojack/whatlanggo"
 	"go.mau.fi/whatsmeow/types/events"
-
-	"github.com/nicksnyder/go-i18n/v2/i18n"
-	"golang.org/x/text/language"
 )
 
 func Handler(rawEvt interface{}) {
-	/* Set language translation */
-
-	// Create a new i18n bundle with default language.
-	bundle := i18n.NewBundle(language.English)
-
-	// Register a toml unmarshal function for i18n bundle.
-	bundle.RegisterUnmarshalFunc("toml", toml.Unmarshal)
-
-	// Load translations from toml files for non-default languages.
-	bundle.MustLoadMessageFile("./lang/active.ar.toml")
-	bundle.MustLoadMessageFile("./lang/active.es.toml")
-
-	var lang string
 
 	switch evt := rawEvt.(type) {
 	case *events.Message:
@@ -86,38 +69,41 @@ func Handler(rawEvt interface{}) {
 
 				switch whatlanggo.Scripts[info.Script] {
 				case "Arabic":
-					go WelcomeMessage(sender, pushName)
-					lang = "ar"
+					//	go WelcomeMessage(sender, pushName)
+					global.Lang = "ar"
 				case "Latin":
-					go WelcomeMessageLatin(sender, pushName)
+					global.Lang = "en"
+					//	go WelcomeMessageLatin(sender, pushName)
 				}
 
-				// Create a new localizer.
-				localizer := i18n.NewLocalizer(bundle, lang)
-				// Set title message.
-				helloPerson := localizer.MustLocalize(&i18n.LocalizeConfig{
-					DefaultMessage: &i18n.Message{
-						ID:    "HelloPerson",     // set translation ID
-						Other: "Hello {{.Name}}", // set default translation
-					},
-					TemplateData: map[string]string{
-						"Name": pushName,
-					},
-					PluralCount: nil,
-				})
+				/*	// Create a new localizer.
+					localizer := i18n.NewLocalizer(bundle, lang)
+					// Set title message.
+					helloPerson := localizer.MustLocalize(&i18n.LocalizeConfig{
+						DefaultMessage: &i18n.Message{
+							ID:    "HelloPerson",     // set translation ID
+							Other: "Hello {{.Name}}", // set default translation
+						},
+						TemplateData: map[string]string{
+							"Name": pushName,
+						},
+						PluralCount: nil,
+					})
 
-				fmt.Println(helloPerson)
-				//	go WelcomeMessage(sender, pushName)
+					fmt.Println(helloPerson) */
+				go WelcomeMessage(sender, pushName)
 			}
 
 		case evt.Message.ImageMessage != nil,
 			evt.Message.AudioMessage != nil,
 			evt.Message.VideoMessage != nil,
 			evt.Message.DocumentMessage != nil:
-			if !evt.Info.IsGroup && !evt.Info.IsFromMe && (sender != "966556888145" && // !evt.Info.IsFromMe &&
-				sender != "966505148268" && sender != "966531041222" && sender != "966502887935" && sender != "966551775959" &&
-				sender != "966550669344") {
-				WelcomeMessage(sender, pushName)
+			if !evt.Info.IsGroup && !evt.Info.IsFromMe && (sender != "966556888145" && // && !evt.Info.IsFromMe
+				sender != "966505148268" && sender != "966531041222" && sender != "966577942979" &&
+				sender != "966506888972" && sender != "966557776097" && sender != "966505360700" && sender != "966555786616" &&
+				sender != "966508884337" && sender != "966508899479" && sender != "966530052201" && sender != "966558936645" &&
+				sender != "966502887935" && sender != "971563451686") {
+				OnlyText(sender)
 			}
 		case evt.Message.ButtonsResponseMessage != nil:
 			fmt.Println("Button responce pressed")

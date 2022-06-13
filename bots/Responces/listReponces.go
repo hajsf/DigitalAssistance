@@ -23,12 +23,13 @@ func ListResponces(id int, sender, pushname string) {
 		vendor.SendLocation(sender)
 		AnotherQuestion(sender)
 	case Enum.CallArrangement:
-		communication.SendEmail(sender, pushname, "Telephone call request")
+		fmt.Println("request call")
+		go communication.SendEmail(sender, pushname, "Telephone call request")
 		vendor.ContactSuperIntendent(sender)
 		vendor.SendContact(sender)
 		AnotherQuestion(sender)
 	case Enum.VisitArrangement:
-		communication.SendEmail(sender, pushname, "Visit/Meeting request")
+		go communication.SendEmail(sender, pushname, "Visit/Meeting request")
 		vendor.ContactSuperIntendent(sender)
 		vendor.SendContact(sender)
 		AnotherQuestion(sender)

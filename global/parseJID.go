@@ -9,10 +9,14 @@ import (
 	"strings"
 	"time"
 
+	"github.com/nicksnyder/go-i18n/v2/i18n"
 	"go.mau.fi/whatsmeow"
 	"go.mau.fi/whatsmeow/types"
 	waLog "go.mau.fi/whatsmeow/util/log"
 )
+
+var Bundle *i18n.Bundle
+var Lang string
 
 type Communicator struct {
 	Sender     string

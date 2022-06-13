@@ -2,6 +2,7 @@ package vendor
 
 import (
 	"DigitalAssistance/global"
+	"fmt"
 
 	waProto "go.mau.fi/whatsmeow/binary/proto"
 	"google.golang.org/protobuf/proto"
@@ -13,6 +14,7 @@ func ContactSuperIntendent(sender string) {
 
 	jid, ok := global.ParseJID(sender)
 	if !ok {
+		fmt.Println(ok, "can not Parse:", sender)
 		return
 	}
 	send, err := global.Cli.SendMessage(jid, "", msg) // jid = recipient

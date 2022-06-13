@@ -16,8 +16,11 @@ import (
 	"DigitalAssistance/handlers"
 	"DigitalAssistance/structs"
 
+	"github.com/BurntSushi/toml"
 	_ "github.com/mattn/go-sqlite3"
 	"github.com/mdp/qrterminal/v3"
+	"github.com/nicksnyder/go-i18n/v2/i18n"
+	"golang.org/x/text/language"
 	"google.golang.org/protobuf/proto"
 
 	"go.mau.fi/whatsmeow"
@@ -32,6 +35,20 @@ var debugLogs = flag.Bool("debug", false, "Enable debug logs?")
 var dbDialect = flag.String("db-dialect", "sqlite3", "Database dialect (sqlite3 or postgres)")
 var dbAddress = flag.String("db-address", "file:mdtest.db?_foreign_keys=on", "Database address")
 
+func init() {
+	/* Set language translation */
+
+	// Create a new i18n bundle with default language.
+	global.Bundle = i18n.NewBundle(language.English)
+
+	// Register a toml unmarshal function for i18n bundle.
+	global.Bundle.RegisterUnmarshalFunc("toml", toml.Unmarshal)
+
+	// Load translations from toml files for non-default languages.
+	global.Bundle.MustLoadMessageFile("./lang/active.ar.toml")
+	global.Bundle.MustLoadMessageFile("./lang/active.es.toml")
+
+}
 func main() {
 
 	//	pdf.Generator()
