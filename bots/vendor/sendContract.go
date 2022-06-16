@@ -43,7 +43,7 @@ func SendContract(sender string) {
 
 	msg := &waProto.DocumentMessage{
 		//	Title:    proto.String("Kottouf Contract Terms"),
-		FileName:      proto.String("contract"),
+		FileName:      proto.String("آلية تعاقد قطوف و حلا"),
 		Mimetype:      proto.String("application/pdf"), // replace this with the actual mime type
 		Url:           &resp.URL,
 		DirectPath:    &resp.DirectPath,

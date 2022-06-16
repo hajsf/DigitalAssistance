@@ -29,7 +29,13 @@ func ButtonResponses(id int, sender string) {
 			UserType:   Enum.NewVendor,
 			UserScript: "Arabic",
 		})
-		go vendor.NewVender(sender)
+		//	vendor.NewVender(sender)
+		vendor.SendContract(sender)
+		vendor.VendorRegistration(sender)
+		vendor.ItemRegistration(sender)
+		vendor.SendLocation(sender)
+		vendor.FillForms(sender)
+		AnotherQuestion(sender)
 	case Enum.Supervisor:
 		global.Users = append(global.Users, global.Communicator{
 			Sender:     sender,

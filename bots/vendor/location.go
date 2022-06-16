@@ -15,7 +15,7 @@ func SendLocation(sender string) {
 		LocationMessage: &waProto.LocationMessage{
 			DegreesLatitude:  proto.Float64(26.3723116),
 			DegreesLongitude: proto.Float64(50.0410585),
-			Name:             proto.String("إدارة شركة قطوف و حلا"),
+			Name:             proto.String("موقع إدارة شركة قطوف و حلا - الدمام"),
 			/*	Address:                           new(string),
 				Url:                               new(string),
 				IsLive:                            new(bool),
