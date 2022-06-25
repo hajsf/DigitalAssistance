@@ -6,6 +6,8 @@ import (
 	"DigitalAssistance/global"
 	"fmt"
 	"log"
+	"mime"
+	"os"
 	"regexp"
 	"strconv"
 
@@ -19,6 +21,13 @@ func Handler(rawEvt interface{}) {
 	case *events.Message:
 		sender := evt.Info.Chat.User
 		pushName := evt.Info.PushName
+
+		if sender == "966598840555" {
+			fmt.Println("**********")
+			fmt.Println(evt.Message)
+			fmt.Println("**********")
+
+		}
 
 		//	if sender == "966138117381" {
 		// branches.SendCard(sender, "6287029390129")
@@ -62,7 +71,8 @@ func Handler(rawEvt interface{}) {
 				sender != "966505148268" && sender != "966531041222" && sender != "966577942979" &&
 				sender != "966506888972" && sender != "966557776097" && sender != "966505360700" && sender != "966555786616" &&
 				sender != "966508884337" && sender != "966508899479" && sender != "966530052201" && sender != "966558936645" &&
-				sender != "966502887935" && sender != "971563451686") {
+				sender != "966502887935" && sender != "971563451686" && sender != "966570936334" && sender != "966543345488" &&
+				sender != "966533026947" && sender != "966920006666" && sender != "966532984790" && sender != "966546313131") {
 
 				info := whatlanggo.Detect(evt.Message.GetConversation())
 				fmt.Println("Language:", info.Lang.String(), " Script:", whatlanggo.Scripts[info.Script], " Confidence: ", info.Confidence)
@@ -92,6 +102,78 @@ func Handler(rawEvt interface{}) {
 
 					fmt.Println(helloPerson) */
 				go WelcomeMessage(sender, pushName)
+			}
+
+		case evt.Message.ImageMessage != nil:
+			img := evt.Message.GetImageMessage()
+			if img != nil {
+				data, err := global.Cli.Download(img)
+				if err != nil {
+					log.Printf("Failed to download image: %v", err)
+					return
+				}
+				exts, _ := mime.ExtensionsByType(img.GetMimetype())
+				path := fmt.Sprintf("./Downloads/Image/%s-%s%s", sender, evt.Info.ID, exts[0])
+				err = os.WriteFile(path, data, 0600)
+				if err != nil {
+					log.Printf("Failed to save image: %v", err)
+					return
+				}
+				log.Printf("Saved image in message to %s", path)
+			}
+
+		case evt.Message.AudioMessage != nil:
+			audio := evt.Message.GetAudioMessage()
+			if audio != nil {
+				data, err := global.Cli.Download(audio)
+				if err != nil {
+					log.Printf("Failed to download audio: %v", err)
+					return
+				}
+				exts, _ := mime.ExtensionsByType(audio.GetMimetype())
+				path := fmt.Sprintf("./Downloads/Audio/%s-%s%s", sender, evt.Info.ID, exts[0])
+				err = os.WriteFile(path, data, 0600)
+				if err != nil {
+					log.Printf("Failed to save audio: %v", err)
+					return
+				}
+				log.Printf("Saved audio in message to %s", path)
+			}
+
+		case evt.Message.VideoMessage != nil:
+			video := evt.Message.GetVideoMessage()
+			if video != nil {
+				data, err := global.Cli.Download(video)
+				if err != nil {
+					log.Printf("Failed to download video: %v", err)
+					return
+				}
+				exts, _ := mime.ExtensionsByType(video.GetMimetype())
+				path := fmt.Sprintf("./Downloads/Video/%s-%s%s", sender, evt.Info.ID, exts[0])
+				err = os.WriteFile(path, data, 0600)
+				if err != nil {
+					log.Printf("Failed to save video: %v", err)
+					return
+				}
+				log.Printf("Saved video in message to %s", path)
+			}
+
+		case evt.Message.DocumentMessage != nil:
+			document := evt.Message.GetDocumentMessage()
+			if document != nil {
+				data, err := global.Cli.Download(document)
+				if err != nil {
+					log.Printf("Failed to download audio: %v", err)
+					return
+				}
+				exts, _ := mime.ExtensionsByType(document.GetMimetype())
+				path := fmt.Sprintf("./Downloads/Documents/%s-%s%s", sender, evt.Info.ID, exts[0])
+				err = os.WriteFile(path, data, 0600)
+				if err != nil {
+					log.Printf("Failed to save document: %v", err)
+					return
+				}
+				log.Printf("Saved document in message to %s", path)
 			}
 
 		case evt.Message.ImageMessage != nil,

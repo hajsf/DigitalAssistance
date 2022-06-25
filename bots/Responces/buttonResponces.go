@@ -6,6 +6,7 @@ import (
 	"DigitalAssistance/bots/franchisee"
 	"DigitalAssistance/bots/vendor"
 	"DigitalAssistance/global"
+	"fmt"
 )
 
 func ButtonResponses(id int, sender string) {
@@ -56,7 +57,8 @@ func ButtonResponses(id int, sender string) {
 		franchisee.SendContact(sender)
 		Bye(sender)
 	case Enum.Yes: // yes another service is required
-		var userType int
+		vendor.CurrentVender(sender)
+	/*	var userType int
 		for _, v := range global.Users {
 			if v.Sender == sender {
 				userType = v.UserType
@@ -68,7 +70,7 @@ func ButtonResponses(id int, sender string) {
 					userType = v.UserType
 					break
 				}
-			} */
+			} *
 		}
 
 		switch userType {
@@ -78,8 +80,9 @@ func ButtonResponses(id int, sender string) {
 			vendor.NewVender(sender)
 		case Enum.Franchisee:
 		case Enum.Supervisor:
-		}
+		} */
 	case Enum.No:
+		fmt.Println("bye bye")
 		Bye(sender)
 
 	}

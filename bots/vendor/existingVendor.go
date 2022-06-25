@@ -13,8 +13,8 @@ import (
 func CurrentVender(sender string) {
 	msg := &waProto.Message{
 		ListMessage: &waProto.ListMessage{
-			Description: proto.String("أهلا و سهلا بشريك النجاح"),
-			ButtonText:  proto.String("يرجى تحديد الهدف من التواصل"),
+			Description: proto.String("أهلا و سهلا بشريك النجاح، يرجى تحديد سبب التواصل"),
+			ButtonText:  proto.String("أنقر هنا  👈"),
 			ListType:    waProto.ListMessage_SINGLE_SELECT.Enum(),
 			Sections: []*waProto.Section{
 				{

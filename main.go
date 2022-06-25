@@ -3,12 +3,14 @@ package main
 import (
 	"context"
 	"database/sql"
+	"encoding/csv"
 	"errors"
 	"flag"
 	"fmt"
 	"log"
 	"os"
 	"os/signal"
+	"strconv"
 	"syscall"
 	"time"
 
@@ -24,6 +26,7 @@ import (
 	"google.golang.org/protobuf/proto"
 
 	"go.mau.fi/whatsmeow"
+	"go.mau.fi/whatsmeow/appstate"
 	waBinary "go.mau.fi/whatsmeow/binary"
 	"go.mau.fi/whatsmeow/store"
 	"go.mau.fi/whatsmeow/store/sqlstore"
@@ -49,6 +52,12 @@ func init() {
 	global.Bundle.MustLoadMessageFile("./lang/active.es.toml")
 
 }
+
+type Contact struct {
+	FirstName, FullName, PushName, BusinessName string
+	Found                                       bool
+}
+
 func main() {
 
 	//	pdf.Generator()
@@ -117,6 +126,73 @@ func main() {
 			}
 		}()
 	}
+
+	global.Cli.FetchAppState(appstate.WAPatchCriticalUnblockLow, true, false)
+	contacts, err := global.Cli.Store.Contacts.GetAllContacts()
+	if err != nil {
+		fmt.Println("Error reading contacts:", err)
+	}
+	fmt.Println("You have:", len(contacts), "contacts")
+
+	jid, ok := global.ParseJID("966538382888")
+	if !ok {
+		fmt.Println("errror")
+	}
+
+	fmt.Println(contacts[jid])
+
+	file, err := os.Create("contacts2.csv")
+	if err != nil {
+		log.Fatalln("failed to open file", err)
+	}
+	//	defer file.Close()
+
+	w := csv.NewWriter(file)
+	// defer w.Flush()
+
+	// Using Write
+	for jid, info := range contacts {
+		_ = Contact{
+			FirstName:    info.FirstName,
+			FullName:     info.FullName,
+			PushName:     info.PushName,
+			BusinessName: info.BusinessName,
+			Found:        info.Found,
+		}
+		row := []string{
+			jid.User,
+			info.FirstName,
+			info.FullName,
+			info.PushName,
+			info.BusinessName,
+			strconv.FormatBool(info.Found),
+		}
+		if err := w.Write(row); err != nil {
+			log.Fatal("error writing record to file", err)
+		}
+	}
+
+	// Using WriteAll
+	/*	var data [][]string
+		for jid, info := range contacts {
+			row := []string{
+				jid.User,
+				info.FirstName,
+				info.FullName,
+				info.PushName,
+				info.BusinessName,
+				strconv.FormatBool(info.Found),
+			}
+			data = append(data, row)
+		}
+		if err := w.WriteAll(data); err != nil {
+			log.Fatal("error writing record to file", err)
+		}
+	*/
+
+	w.Flush()
+	file.Close()
+	fmt.Println("************")
 
 	global.Cli.AddEventHandler(handlers.Handler)
 	err = global.Cli.Connect()

@@ -11,6 +11,17 @@ func BranchIssue(sender string) {
 	//	msg := &waProto.Message{
 	//		Conversation: proto.String("*مع السلامه*")}
 
+/*	msg1 := &waProto.ButtonsMessage{
+	TemplateData: waProto.TemplateData {
+		{
+			index: 1,
+			proto.CanonicalUrl
+		}
+	}	
+	}
+ */
+	
+
 	msg := &waProto.Message{
 		ExtendedTextMessage: &waProto.ExtendedTextMessage{
 			Title: proto.String("ملاحظات و شكاوى الفروع"),
