@@ -8,6 +8,7 @@ import (
 	"flag"
 	"fmt"
 	"log"
+	"net/http"
 	"os"
 	"os/signal"
 	"strconv"
@@ -39,6 +40,8 @@ var dbDialect = flag.String("db-dialect", "sqlite3", "Database dialect (sqlite3 
 var dbAddress = flag.String("db-address", "file:mdtest.db?_foreign_keys=on", "Database address")
 
 func init() {
+	http.HandleFunc("/sse/signal", global.Passer.HandleSignal)
+
 	/* Set language translation */
 
 	// Create a new i18n bundle with default language.
@@ -59,7 +62,7 @@ type Contact struct {
 }
 
 func main() {
-
+	go http.ListenAndServe(":1234", nil)
 	//	pdf.Generator()
 	//Create a folder/directory at a full qualified path
 	err := os.MkdirAll("./temp", 0755)

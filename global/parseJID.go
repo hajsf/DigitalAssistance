@@ -17,6 +17,7 @@ import (
 
 var Bundle *i18n.Bundle
 var Lang string
+var Passer = &DataPasser{Logs: make(chan string)}
 
 type Communicator struct {
 	Sender     string

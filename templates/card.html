@@ -104,7 +104,12 @@ img {
 <body>
   <!-- Ribbon -->
   <div class="box ofh">
-    <div class="half-circle-ribbon"><span class="price">{{.Ipart}}.<span class="cents">{{.Dpart}}</span></span>
+    <div class="half-circle-ribbon">
+        <h6 dir="rtl" 
+        style="position: absolute;top: 0px;right: 0px; margin-top:0.25em; padding-right:5px;">
+        سعر الرف شامل الضريبة
+        </h6>
+        <span class="price">{{.Ipart}}.<span class="cents">{{.Dpart}}</span></span>
     <br>ريال</div>
 
     <table style="width: 100%; height: 100%;">
@@ -128,14 +133,14 @@ img {
                     <td>{{.Card.RegistrationDate}}</td>
                 </tr>
                 <tr>
-                        <td>الباركود::</td>
+                        <td>الباركود:</td>
                         <td style="font-weight: bold;">{{.Card.BarCode}}</td>
 
                         <td>الصنف:</td>
                         <td>{{.Card.SKUCode}}</td>
                     </tr>
                     <tr>
-                        <td>إسم الننتج:</td>
+                        <td>إسم المنتج:</td>
                         <td>{{.Card.ItemName}}</td>
                         <td>البراند:</td>
                         <td>{{.Card.BrandName}}</td>
@@ -160,7 +165,7 @@ img {
                     </tr>
                     <tr>
                         <td>تكلفة المنتج:</td>
-                        <td>{{.Card.KottofCost}}</td>
+                        <td dir="rtl">فقط {{.Card.KottofCost}} ريال شامل الضريبة</td>
                         <td>الحد الأدنى للطلب:</td>
                         <td>{{.Card.MinimumOrderQty}}</td>
                     </tr>
@@ -183,9 +188,8 @@ img {
                 </table>
             </td>
         </tr>
-        </table>
+        </table>  
     </div>
-
-  
+    <h6 dir="rtl">&nbsp;&nbsp;&nbsp;جميع الأسعار اعلاه شاملة الضريبة 15%</h6>
 </body>
 </html>

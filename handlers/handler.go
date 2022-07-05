@@ -4,6 +4,7 @@ import (
 	responces "DigitalAssistance/bots/Responces"
 	"DigitalAssistance/bots/branches"
 	"DigitalAssistance/global"
+	"encoding/json"
 	"fmt"
 	"log"
 	"mime"
@@ -19,6 +20,13 @@ func Handler(rawEvt interface{}) {
 
 	switch evt := rawEvt.(type) {
 	case *events.Message:
+
+		info, err := json.MarshalIndent(&evt.Info, "", "\t")
+		if err != nil {
+			fmt.Println("error:", err)
+		}
+		global.Passer.Logs <- string(info)
+
 		sender := evt.Info.Chat.User
 		pushName := evt.Info.PushName
 
@@ -72,7 +80,9 @@ func Handler(rawEvt interface{}) {
 				sender != "966506888972" && sender != "966557776097" && sender != "966505360700" && sender != "966555786616" &&
 				sender != "966508884337" && sender != "966508899479" && sender != "966530052201" && sender != "966558936645" &&
 				sender != "966502887935" && sender != "971563451686" && sender != "966570936334" && sender != "966543345488" &&
-				sender != "966533026947" && sender != "966920006666" && sender != "966532984790" && sender != "966546313131") {
+				sender != "966533026947" && sender != "966920006666" && sender != "966532984790" && sender != "966546313131" &&
+				sender != "966549700035" && sender != "966580392145" && sender != "966504501968" && sender != "966599522201" &&
+				sender != "966551177066" && sender != "966504676300") {
 
 				info := whatlanggo.Detect(evt.Message.GetConversation())
 				fmt.Println("Language:", info.Lang.String(), " Script:", whatlanggo.Scripts[info.Script], " Confidence: ", info.Confidence)
