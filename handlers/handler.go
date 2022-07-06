@@ -70,7 +70,7 @@ func Handler(rawEvt interface{}) {
 					msgReceived := string(info)
 					data, _ := PrepareModel(evt.Info.Chat.User,
 						sender, pushName, evt.Info.Timestamp.String(), // .GoString(),
-						evt.Info.ID, evt.Info.Type, msgReceived, "", "")
+						evt.Info.ID, "text", msgReceived, "", "")
 					global.Passer.Logs <- data
 				}()
 
@@ -100,7 +100,7 @@ func Handler(rawEvt interface{}) {
 				go func() {
 					data, _ := PrepareModel(evt.Info.Chat.User,
 						sender, pushName, evt.Info.Timestamp.GoString(),
-						evt.Info.ID, evt.Info.Type, evt.RawMessage.String(), "", "")
+						evt.Info.ID, "text", evt.RawMessage.String(), "", "")
 					global.Passer.Logs <- data
 				}()
 			//	global.Passer.Logs <- evt.RawMessage.String()
@@ -125,7 +125,7 @@ func Handler(rawEvt interface{}) {
 
 					data, _ := PrepareModel(evt.Info.Chat.User,
 						sender, pushName, evt.Info.Timestamp.GoString(),
-						evt.Info.ID, evt.Info.Type, msgReceived, "", "")
+						evt.Info.ID, "text", msgReceived, "", "")
 					global.Passer.Logs <- data
 
 					/*		model := Model{
@@ -200,7 +200,7 @@ func Handler(rawEvt interface{}) {
 					msgReceived := evt.Message.GetChat()
 					data, _ := PrepareModel(evt.Info.Chat.User,
 						sender, pushName, evt.Info.Timestamp.GoString(),
-						evt.Info.ID, evt.Info.Type, fmt.Sprintf("%v", msgReceived), "", "")
+						evt.Info.ID, "text", fmt.Sprintf("%v", msgReceived), "", "")
 					global.Passer.Logs <- data
 				}()
 			//	global.Passer.Logs <- fmt.Sprintf("Chat: ", chat)
@@ -224,7 +224,7 @@ func Handler(rawEvt interface{}) {
 						log.Printf("Saved image in message to %s", path)
 						data, _ := PrepareModel(evt.Info.Chat.User,
 							sender, pushName, evt.Info.Timestamp.GoString(),
-							evt.Info.ID, evt.Info.Type, "", "", path)
+							evt.Info.ID, "image", "", "", path)
 						global.Passer.Logs <- data
 						//	global.Passer.Logs <- fmt.Sprintf("Image: <a href='%v' target='_blank'>Open</a>", path)
 					}
@@ -244,7 +244,7 @@ func Handler(rawEvt interface{}) {
 				}()
 				data, _ := PrepareModel(evt.Info.Chat.User,
 					sender, pushName, evt.Info.Timestamp.GoString(),
-					evt.Info.ID, evt.Info.Type, "Sticker recieved", "", "")
+					evt.Info.ID, "sticker", "Sticker recieved", "", "")
 				global.Passer.Logs <- data
 
 			case evt.Message.AudioMessage != nil:
@@ -266,7 +266,7 @@ func Handler(rawEvt interface{}) {
 						log.Printf("Saved audio in message to %s", path)
 						data, _ := PrepareModel(evt.Info.Chat.User,
 							sender, pushName, evt.Info.Timestamp.GoString(),
-							evt.Info.ID, evt.Info.Type, "", "", path)
+							evt.Info.ID, "audio", "", "", path)
 						global.Passer.Logs <- data
 						//	global.Passer.Logs <- fmt.Sprintf("Audio: <a href='%v' target='_blank'>Open</a>", path)
 					}
@@ -292,7 +292,7 @@ func Handler(rawEvt interface{}) {
 						//	global.Passer.Logs <- fmt.Sprintf("Video: <a href='%v' target='_blank'>Open</a>", path)
 						data, _ := PrepareModel(evt.Info.Chat.User,
 							sender, pushName, evt.Info.Timestamp.GoString(),
-							evt.Info.ID, evt.Info.Type, "", "", path)
+							evt.Info.ID, "video", "", "", path)
 						global.Passer.Logs <- data
 					}
 				}()
@@ -315,7 +315,7 @@ func Handler(rawEvt interface{}) {
 						log.Printf("Saved document in message to %s", path)
 						data, _ := PrepareModel(evt.Info.Chat.User,
 							sender, pushName, evt.Info.Timestamp.GoString(),
-							evt.Info.ID, evt.Info.Type, "", "", path)
+							evt.Info.ID, "document", "", "", path)
 						global.Passer.Logs <- data
 						//	global.Passer.Logs <- fmt.Sprintf("Document: <a href='%v' target='_blank'>Open</a>", path)
 					}
@@ -357,7 +357,7 @@ func Handler(rawEvt interface{}) {
 				go func() {
 					data, _ := PrepareModel(evt.Info.Chat.User,
 						sender, pushName, evt.Info.Timestamp.GoString(),
-						evt.Info.ID, evt.Info.Type, "Location: "+link, "", "")
+						evt.Info.ID, "location", "Location: "+link, "", "")
 					global.Passer.Logs <- data
 				}()
 

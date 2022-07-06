@@ -29,6 +29,8 @@ source.onmessage = function (event) {
     const obj = JSON.parse(message)
     const Details = document.createElement("details");
     const Summary = document.createElement("summary");
+    const Content = document.createElement("p");
+    const Attachment = document.createElement(null);
 
     incomingMsg = obj.MessageText.replace(/\"/g, "")
     // const result = 10 > 5 ? 'yes' : 'no';
@@ -43,8 +45,34 @@ source.onmessage = function (event) {
     Details.setAttribute("type", obj.MessageType)
     Details.setAttribute("url", obj.Uri)
     Details.setAttribute("id", obj.MessageID)
-    const Content = document.createElement("p");
+    
     Content.innerHTML = "Text: " + body
+
+    if(obj.MessageType === "image") {
+      Attachment.innerHTML = '<br>' + "<img src='"+obj.Uri+"' alt='Message attachment' width: 100%;' height='600'>"
+    } else if(obj.MessageType === "audio"){
+    //  console.log(`Audio source: ${obj.Uri}`)
+      Attachment.innerHTML = '<br>' + "<audio controls> "+
+        "<source src='"+obj.Uri+"' type='audio/ogg'>" +
+        "<source src='"+obj.Uri+"' type='audio/mpeg'>" +
+        "<source src='"+obj.Uri+"' type='audio/oga'>" +
+     //   "<source src='test.oga' type='audio/ogg; codecs=`vorbis`'></source>" +
+        "Your browser does not support the audio element." +
+      "</audio>"
+    } else if(obj.MessageType === "video"){
+      Attachment.innerHTML = '<br>' + "<video width: 100%;' height='600' controls> " +
+        "<source src='"+obj.Uri+"' type='video/ogg'>" +
+        "<source src='"+obj.Uri+"' type='video/mp4'>" +
+        "<source src='"+obj.Uri+"' type='video/m4v'>" +
+        "Your browser does not support the video tag." +
+      "</video>"
+    } else if(obj.MessageType === "document"){
+      Attachment.innerHTML = '<br>' +  "<embed id='pdf' type='application/pdf'" +
+      "src='"+obj.Uri+"' style='width: 100%;' height='600'>"
+    }
+
+    Content.appendChild(Attachment);
+
     Details.appendChild(Summary);
     Details.appendChild(Content);
     console.log(Details)
