@@ -35,6 +35,7 @@ func (p *DataPasser) HandleSignal(w http.ResponseWriter, r *http.Request) {
 			//c := counter
 			mux.Unlock()
 			fmt.Fprintf(w, "data: %v\n\n", c)
+			// fmt.Fprintf(w, "%v\n\n", c)
 			flusher.Flush()
 		case <-r.Context().Done():
 			fmt.Println("Connection closed")
